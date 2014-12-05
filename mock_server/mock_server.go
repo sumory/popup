@@ -14,7 +14,7 @@ func main(){
 		fmt.Println("session start")
 
 		session.ReadLoop(func(msg []byte) {
-			fmt.Println(Now(), string(msg))
+			fmt.Println(Now(),session.GetId(), string(msg))
 			session.Send([]byte("收到："+string(msg)))
 		})
 

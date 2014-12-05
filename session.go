@@ -20,6 +20,10 @@ func NewSession(id uint64, conn net.Conn) *Session {
 	return session
 }
 
+func (session *Session) GetId() uint64{
+	return session.id
+}
+
 //关闭会话
 func (session *Session) Close() {
 	session.conn.Close()
