@@ -36,7 +36,7 @@ func (session *Session) Read() ([]byte, error) {
 	return buf[:n], err
 }
 
-func (session *Session) ReadLoop(handler func([]byte)) {
+func (session *Session) ReadLoop(handler func(*Session, []byte)) {
 	for {
 		var buf []byte
 		var err error
@@ -44,7 +44,7 @@ func (session *Session) ReadLoop(handler func([]byte)) {
 			session.Close()
 			break
 		}
-		handler(buf)
+		handler(session, buf)
 	}
 }
 

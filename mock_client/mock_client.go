@@ -15,9 +15,7 @@ func main(){
 	if err != nil {
 		panic(err)
 	}
-	go client.ReadLoop(func(msg []byte) {
-		fmt.Println(Now(), string(msg))
-	})
+	go client.ReadLoop(readHandler)
 
 	for {
 		var input string
@@ -30,3 +28,6 @@ func main(){
 	client.Close()
 }
 
+func readHandler(client *popup.Session, msg []byte) {
+	fmt.Println(Now(), string(msg))
+}

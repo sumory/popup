@@ -7,8 +7,8 @@ import (
 
 var dialSessionId uint64
 
-func Listen(n, laddr string) (*Server, error) {
-	listener, err := net.Listen(n, laddr)
+func Listen(network, laddr string) (*Server, error) {
+	listener, err := net.Listen(network, laddr)
 	if err != nil {
 		return nil, err
 	}
@@ -16,8 +16,8 @@ func Listen(n, laddr string) (*Server, error) {
 }
 
 
-func Dial(n, laddr string) (*Session, error) {
-	conn, err := net.Dial(n, laddr)
+func Dial(network, laddr string) (*Session, error) {
+	conn, err := net.Dial(network, laddr)
 	if err != nil {
 		return nil, err
 	}
