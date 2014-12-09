@@ -3,13 +3,13 @@ package popup
 import "net"
 
 type Session struct {
-	id       uint64
+	id       string
 	conn     net.Conn
 	sendChan chan []byte
 }
 
 //创建新会话
-func NewSession(id uint64, conn net.Conn) *Session {
+func NewSession(id string, conn net.Conn) *Session {
 	session := &Session{
 		id:id,
 		conn:conn,
@@ -20,7 +20,7 @@ func NewSession(id uint64, conn net.Conn) *Session {
 	return session
 }
 
-func (session *Session) GetId() uint64{
+func (session *Session) GetId() string{
 	return session.id
 }
 

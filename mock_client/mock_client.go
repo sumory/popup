@@ -29,5 +29,5 @@ func main(){
 }
 
 func readHandler(client *popup.Session, msg []byte) {
-	fmt.Println(Now(), string(msg))
+	fmt.Println(Now(), "client:",client.GetId(), string(msg))
 }

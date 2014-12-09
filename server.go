@@ -3,20 +3,25 @@ package popup
 import (
 	"fmt"
 	"net"
-	"sync/atomic"
 )
 
 type Server struct {
 	listener     net.Listener
 	sessions     map[uint64]*Session
 	maxSessionId uint64
+	idgen *IdWorker
 }
 
 func NewServer(listener net.Listener) *Server {
+	idWorker,err := NewIdWorker(1,1)
+	if err!=nil{
+		panic("idWorker error")
+	}
 	return &Server{
 		listener:listener,
 		maxSessionId: 0,
 		sessions:make(map[uint64]*Session),
+		idgen:idWorker,
 	}
 }
 
@@ -50,7 +55,7 @@ func (server *Server) Stop() {
 }
 
 func (server *Server) newSession(conn net.Conn) *Session {
-	id := atomic.AddUint64(&server.maxSessionId, 1)
+	id:= server.idgen.ShortId()// atomic.AddUint64(&server.maxSessionId, 1)
 	session := NewSession(id, conn)
 	return session
 }

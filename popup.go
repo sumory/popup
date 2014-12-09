@@ -2,7 +2,6 @@ package popup
 
 import (
 	"net"
-	"sync/atomic"
 )
 
 var dialSessionId uint64
@@ -21,7 +20,7 @@ func Dial(network, laddr string) (*Session, error) {
 	if err != nil {
 		return nil, err
 	}
-	id := atomic.AddUint64(&dialSessionId, 1)
+	id := "abc"
 	session := NewSession(id, conn)
 	return session, nil
 }
