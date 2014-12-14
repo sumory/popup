@@ -3,17 +3,18 @@ package popup
 import (
 	"fmt"
 	"net"
+	"github.com/sumory/idgen"
 )
 
 type Server struct {
 	listener     net.Listener
 	sessions     map[uint64]*Session
 	maxSessionId uint64
-	idgen *IdWorker
+	idWorker *idgen.IdWorker
 }
 
 func NewServer(listener net.Listener) *Server {
-	idWorker,err := NewIdWorker(1,1)
+	err,idWorker := idgen.NewIdWorker(1)
 	if err!=nil{
 		panic("idWorker error")
 	}
@@ -21,7 +22,7 @@ func NewServer(listener net.Listener) *Server {
 		listener:listener,
 		maxSessionId: 0,
 		sessions:make(map[uint64]*Session),
-		idgen:idWorker,
+		idWorker:idWorker,
 	}
 }
 
@@ -55,7 +56,7 @@ func (server *Server) Stop() {
 }
 
 func (server *Server) newSession(conn net.Conn) *Session {
-	id:= server.idgen.ShortId()// atomic.AddUint64(&server.maxSessionId, 1)
+	_,id:= server.idWorker.ShortId()
 	session := NewSession(id, conn)
 	return session
 }
