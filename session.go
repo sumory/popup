@@ -53,7 +53,6 @@ func (session *Session) Send(message []byte) error {
 	return err
 }
 
-
 func (session *Session) sendLoop() {
 	for {
 		message := <-session.sendChan
